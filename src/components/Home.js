@@ -1,11 +1,34 @@
 import styled from "styled-components";
 import Garbage from "./Garbage";
+import { useState } from "react";
 
 const Home = () => {
+  const [isStop, setStop] = useState(false);
+  const [axis, setAxis] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  window.addEventListener("click", () => {
+    console.log("click");
+    if (!isStop) {
+      setStop(true);
+    } else {
+      setStop(false);
+    }
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    setAxis({
+      x: (e.clientX / window.innerWidth) * 100,
+      y: (e.clientY / window.innerHeight) * 100,
+    });
+  });
+
   return (
     <Container>
       <Cannon></Cannon>
-      <Garbage />
+      <Garbage click={isStop} axis={axis} />
       <Bucket></Bucket>
     </Container>
   );

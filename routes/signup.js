@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("./models/user");
+const User = require("../models/user");
 const router = express.Router();
 
 router.post("/api/signup", async (req, res) => {
@@ -16,11 +16,11 @@ router.post("/api/signup", async (req, res) => {
     // check weather the email is already registered
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
-      return res.status(422).send({ error: "Email is already registered" });
+      return res.status(422).send({ error: "email is already registered" });
     }
 
     //post the new user to the database
-    const user = new User(email, password);
+    const user = new User({ email, password });
     const d = await user.save();
 
     res.status(201).send({ success: "User created successfully" });

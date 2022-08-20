@@ -6,7 +6,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -20,7 +20,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("/api/login", {
+    const res = await fetch("/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const Signup = () => {
     const data = await res.json();
     console.log(data);
     alert(JSON.stringify(data));
-    if (res.status === 200) {
+    if (res.status === 201) {
       navigate("/");
     }
   };
@@ -45,11 +45,11 @@ const Signup = () => {
               value={credentials.email}
               onChange={handleChange}
               type="email"
-              placeholder="Username"
-              name="username"
+              placeholder="email"
+              name="email"
             />
             <input
-              value={credentials.email}
+              value={credentials.password}
               onChange={handleChange}
               type="password"
               placeholder="Password"

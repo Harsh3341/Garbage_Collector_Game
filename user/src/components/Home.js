@@ -3,32 +3,34 @@ import Garbage from "./Garbage";
 import { useState } from "react";
 
 const Home = () => {
-  const [isStop, setStop] = useState(false);
   const [axis, setAxis] = useState({
     x: 0,
     y: 0,
   });
 
-  window.addEventListener("click", () => {
-    console.log("click");
-    if (!isStop) {
-      setStop(true);
-    } else {
-      setStop(false);
-    }
-  });
-
-  window.addEventListener("mousemove", (e) => {
+  const coordinates = (e) => {
     setAxis({
-      x: (e.clientX / window.innerWidth) * 100,
-      y: (e.clientY / window.innerHeight) * 100,
+      x: (e.clientX / window.innerWidth) * 100 - 1,
+      y: (e.clientY / window.innerHeight) * 100 - 1,
     });
-  });
+  };
+
+  const mouseMovement = () => {
+    window.addEventListener("mousemove", coordinates);
+  };
+
+  const removeMouseEventListener = () => {
+    window.removeEventListener("mousemove", coordinates);
+  };
 
   return (
     <Container>
       <Cannon></Cannon>
-      <Garbage click={isStop} axis={axis} />
+      <Garbage
+        addmove={mouseMovement}
+        rmove={removeMouseEventListener}
+        axis={axis}
+      />
       <Bucket></Bucket>
     </Container>
   );

@@ -51,7 +51,7 @@ const Garbage = (props) => {
     };
 
     if (isDropping.x < 650) {
-      setTimeout(handleDrop, 4);
+      // setTimeout(handleDrop, 4);
     } else {
       setDropping({
         x: 0,

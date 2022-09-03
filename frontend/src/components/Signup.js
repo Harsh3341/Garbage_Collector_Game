@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import qs from "qs";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ const Signup = () => {
     email: "",
     password: "",
   });
+
+  const { email, password } = credentials;
 
   const handleChange = (e) => {
     setCredentials({
@@ -19,18 +22,26 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(credentials);
 
-    const res = await fetch("/api/signup", {
+    const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify(credentials),
-    });
-    const data = await res.json();
-    console.log(data);
-    alert(JSON.stringify(data));
-    if (res.status === 201) {
+      body: qs.stringify({
+        email,
+        password,
+      }),
+      url: "http://localhost:5000/register",
+    };
+
+    const response = await fetch(options.url, options);
+    const data = await response.json();
+
+    if (data.error) {
+      console.log(data.error);
+    } else {
       navigate("/");
     }
   };
@@ -42,14 +53,14 @@ const Signup = () => {
           <h3>Signup</h3>
           <form>
             <input
-              value={credentials.email}
+              value={email}
               onChange={handleChange}
               type="email"
               placeholder="email"
               name="email"
             />
             <input
-              value={credentials.password}
+              value={password}
               onChange={handleChange}
               type="password"
               placeholder="Password"
@@ -89,17 +100,14 @@ const LoginPanel = styled.div`
   /* justify-content: center; */
   flex-direction: column;
   align-items: center;
-
   h3 {
     font-size: 2rem;
     margin: 10px;
     margin-bottom: 9rem;
   }
-
   form {
     display: flex;
     flex-direction: column;
-
     input {
       margin-bottom: 1rem;
       border-radius: 5px;
@@ -107,7 +115,6 @@ const LoginPanel = styled.div`
       border-style: none;
       border: 2px solid black;
     }
-
     button {
       background-color: red;
       border-style: none;
@@ -116,7 +123,6 @@ const LoginPanel = styled.div`
       padding: 7px;
       cursor: pointer;
       font-weight: bold;
-
       &:hover {
         background-color: #ff5b5b;
       }

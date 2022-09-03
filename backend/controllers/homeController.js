@@ -10,7 +10,7 @@ const UserGameData = require("../models/userGameData");
 const getData = asyncHandler(async (req, res) => {
   const gameData = await UserGameData.find({ user: req.user.id });
 
-  res.json(gameData);
+  res.status(200).json(gameData);
 });
 
 // @desc Set user game data

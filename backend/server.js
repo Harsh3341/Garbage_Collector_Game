@@ -12,9 +12,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/register", require("./routes/registerRoute"));
-app.use("/login", require("./routes/loginRoute"));
-app.use("/", require("./routes/homeRoute"));
+app.use("/api/register", require("./routes/registerRoute"));
+app.use("/api/login", require("./routes/loginRoute"));
+app.use("/api/", require("./routes/homeRoute"));
 
 app.use(errorHandler);
 

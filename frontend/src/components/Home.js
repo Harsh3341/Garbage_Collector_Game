@@ -18,7 +18,11 @@ const Home = () => {
 
     const response = await fetch(option.url, option);
     const data = await response.json();
-    console.log(data);
+    if (data.success) {
+      alert("User authenticated successfully");
+    } else {
+      navigate("/login");
+    }
   };
 
   useEffect(() => {

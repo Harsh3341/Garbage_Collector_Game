@@ -14,7 +14,6 @@ const Garbage = (props) => {
   useEffect(() => {
     const handClick = () => {
       setWait(false);
-      console.log("handClick");
       props.addmove();
     };
     ref.current.addEventListener("mousedown", handClick);
@@ -26,7 +25,6 @@ const Garbage = (props) => {
   useEffect(() => {
     const handMove = () => {
       setWait(true);
-      console.log("handMove");
       props.rmove();
     };
     ref.current.addEventListener("mouseup", handMove);

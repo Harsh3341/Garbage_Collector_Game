@@ -1,8 +1,34 @@
 import styled from "styled-components";
 import Garbage from "./Garbage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const userAuthenticate = async () => {
+    const option = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      url: "http://localhost:5000/api/",
+    };
+
+    const response = await fetch(option.url, option);
+    const data = await response.json();
+    if (data.success) {
+      alert("User authenticated successfully");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    userAuthenticate();
+  }, []);
+
   const [axis, setAxis] = useState({
     x: 0,
     y: 0,

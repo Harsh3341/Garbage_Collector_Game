@@ -14,7 +14,6 @@ const Garbage = (props) => {
   useEffect(() => {
     const handClick = () => {
       setWait(false);
-      console.log("handClick");
       props.addmove();
     };
     ref.current.addEventListener("mousedown", handClick);
@@ -26,7 +25,6 @@ const Garbage = (props) => {
   useEffect(() => {
     const handMove = () => {
       setWait(true);
-      console.log("handMove");
       props.rmove();
     };
     ref.current.addEventListener("mouseup", handMove);
@@ -51,7 +49,7 @@ const Garbage = (props) => {
     };
 
     if (isDropping.x < 650) {
-      setTimeout(handleDrop, 4);
+      // setTimeout(handleDrop, 4);
     } else {
       setDropping({
         x: 0,

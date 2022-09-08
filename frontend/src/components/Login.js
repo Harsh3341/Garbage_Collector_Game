@@ -3,16 +3,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 
-const Signup = () => {
+const Login = () => {
   const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
-    name: "",
     email: "",
     password: "",
   });
 
-  const { name, email, password } = credentials;
+  const { email, password } = credentials;
 
   const handleChange = (e) => {
     setCredentials({
@@ -30,19 +29,19 @@ const Signup = () => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: qs.stringify({
-        name,
         email,
         password,
       }),
-      url: "http://localhost:5000/api/register",
+      url: "http://localhost:5000/api/login",
     };
 
     const response = await fetch(options.url, options);
     const data = await response.json();
 
     if (data.success) {
-      alert("User registered successfully");
-      navigate("/login");
+      localStorage.setItem("token", data.data.token);
+      alert("User logged in successfully");
+      navigate("/");
     } else {
       alert(data.message);
     }
@@ -52,15 +51,8 @@ const Signup = () => {
     <Container>
       <CenterBox>
         <LoginPanel>
-          <h3>Signup</h3>
+          <h3>Login</h3>
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              value={name}
-              onChange={handleChange}
-            />
             <input
               value={email}
               onChange={handleChange}
@@ -75,7 +67,7 @@ const Signup = () => {
               placeholder="Password"
               name="password"
             />
-            <button type="submit">Register</button>
+            <button type="submit">Login</button>
           </form>
         </LoginPanel>
       </CenterBox>
@@ -137,4 +129,4 @@ const LoginPanel = styled.div`
   }
 `;
 
-export default Signup;
+export default Login;
